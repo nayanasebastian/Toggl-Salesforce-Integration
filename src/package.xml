@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>TGNS_Services</members>
+        <members>TGNS_TimeEntriesController</members>
+        <members>TGNS_TimeEntriesController_v2</members>
+        <members>TGNS_TogglSetupController</members>
+        <members>TGNS_Utility</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>TGNS_TimeEntriesPage</members>
+        <members>TGNS_TimeEntriesPage_v2</members>
+        <members>TGNS_TogglSetup</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>Toggl</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>CS_Toggl_URLs__c</members>
+        <members>TGNS_Project__c</members>
+        <members>TGNS_Task__c</members>
+        <members>TGNS_Time_Entry__c</members>
+        <members>Toggl__c</members>
+        <members>User</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>TGNS_Project__c</members>
+        <members>TGNS_Task__c</members>
+        <members>TGNS_Time_Entry__c</members>
+        <members>Toggl_Setup</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>TGNS_Project__c-TGNS Project Layout</members>
+        <members>TGNS_Task__c-TGNS Task Layout</members>
+        <members>TGNS_Time_Entry__c-TGNS Time Entry Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>TGNS_Project__c</members>
+        <members>TGNS_Task__c</members>
+        <members>TGNS_Time_Entry__c</members>
+        <name>Workflow</name>
+    </types>
+    <version>31.0</version>
+</Package>

@@ -1,0 +1,110 @@
+<apex:page controller="TGNS_TimeEntriesController_v2" tabStyle="User" >
+
+    <apex:form >
+        
+        <apex:pageBlock title="Toggle Report" id="myBlock">   
+            
+            <apex:pageBlockSection >
+              <apex:outputLabel value="Sync Toggl entries on : " for="entryDate"/>
+              <apex:inputText id="entryDate" size="10" value="{!entryDate}" onfocus="DatePicker.pickDate(false,this,false);" required="true"/>                  
+            </apex:pageBlockSection>
+            <apex:commandButton value="Sync now" action="{!fetch}" reRender="result, newtab1" status="myStatus"/>
+            <apex:pageBlockSection id="configSection" collapsible="true" title="Congifuration"><!--TOBEDELETED-->
+                <apex:outputText >
+                    Username : {!config.Name}
+                </apex:outputText>
+                <apex:outputText >
+                    API Token: {!config.API_Token__c}
+                </apex:outputText>
+                <apex:outputText >
+                    WorkSpaceID: {!config.Workspace_ID__c }
+                </apex:outputText>
+                <apex:outputLink value="/apex/TGNS_TogglSetup" target="_blank">
+                    Edit
+                </apex:outputLink>
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <!--RESULT: Detailed Report-->
+        <apex:actionStatus startText="requesting..." id="myStatus">
+            <apex:facet name="stop"></apex:facet>
+        </apex:actionStatus>
+        
+        <p><apex:outputText value="Next: {!state}" id="showstate3" /></p>
+        <p><apex:outputText value="Selected values: {!projectList}" id="showstate" /></p> 
+        
+        
+        <apex:pageBlock id="result">  
+           <!-- Table1        
+                        
+             <apex:repeat value="{!projectList}" var="project">  
+                <apex:variable value="{!1}" var="rowNum"/>                     
+                <apex:pageBlockSection title="{!project.name}" id="newtab1">       
+                    <table>
+                         <tr>
+                            <td>Description</td>
+                        </tr>
+                       <!--  <apex:variable value="{!1}" var="rowNum2"/> 
+                        <apex:repeat value="{!project.entryList}" var="entry">
+                             <!-- {!entry.description}                            
+                             <tr id="entry{!rowNum}">
+                                 <td>{!project.entryList[0].description}</td>
+                             </tr>
+                            <!-- <apex:variable var="rowNum2" value="{!rowNum2 + 1}"/>
+                          </apex:repeat>
+                    </table>   
+                 </apex:pageBlockSection>
+                 <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+             </apex:repeat> 
+          
+          
+          
+          Table2-->
+          <apex:repeat value="{!projectList}" var="project">
+            <apex:pageBlockSection title="{!project.name}">
+            
+              <apex:pageBlockTable value="{!project.entryList}" var="entry">
+                <apex:column headerValue="Select">
+<!--                   <apex:facet name="header">
+                      <apex:inputCheckbox onclick="selectAllCheckboxes(this,'inputId')"/>
+                  </apex:facet> -->
+                  <apex:inputCheckbox value="{!entry.isSelected}" id="inputId"/>
+                </apex:column>     
+                <apex:column headerValue="Project">
+                  <apex:selectList id="projectlist" value="{!entry.projectId}" multiselect="false" size="1" onchange="methodOneInJavascript(this.value)" required="true">
+                    <apex:selectOption itemValue="0" itemLabel="--Select--"/>  
+                    <apex:selectOptions value="{!projectOptions}"/>
+                  </apex:selectList>
+                </apex:column>
+                          
+               <!-- <apex:column headerValue="Task">
+                  <apex:outputPanel id="showstate2">
+                  <apex:selectList value="{!entry.taskId}" multiselect="false" size="1" disabled="{!IF(entry.projectId==null,true,false)}">
+                    <apex:selectOption itemValue="0" itemLabel="--Select--"/>  
+                    <apex:selectOptions value="{!taskOptions}"/>
+                  </apex:selectList>
+                  </apex:outputPanel>
+                </apex:column>  -->    
+                <apex:column headerValue="Task Description">
+                    <apex:inputText value="{!entry.description}"/>
+                </apex:column>
+                <apex:column headerValue="Effort">
+                    <apex:inputText value="{!entry.duration}"/>
+                </apex:column>
+                <apex:column headerValue="Client Billable">
+                    <apex:inputCheckbox value="{!entry.isBillable}" id="billable"/>
+                </apex:column>              
+                <!--<apex:column headerValue="Client Billable" value="{!entry.isBillable}"/>-->
+              </apex:pageBlockTable>
+            </apex:pageBlockSection>
+          </apex:repeat>
+          <apex:actionFunction action="{!setTaskOptions}" name="methodOneInJavascript" rerender="showstate, showstate2,showstate3, newtab1">
+                <apex:param name="firstParam" assignTo="{!projectId}" value="" />
+                <apex:param name="secondParam" assignTo="{!state}" value="" />
+          </apex:actionFunction>
+        </apex:pageBlock>   
+   
+   
+    </apex:form>
+   
+</apex:page>
